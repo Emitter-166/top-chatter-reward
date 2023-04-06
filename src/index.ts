@@ -4,11 +4,14 @@ import * as fs from 'fs';
 import { Sequelize, Transaction } from 'sequelize';
 import { addKPCodes, getKPCode, seeKPCodes } from './rewards/kp_code_operations';
 import { commands_listener } from './commands';
+import { giveTopChatterRole, removeTopChatterRole, topChatterScanner } from './rewards/top_chatter_operations';
+import { message_create } from './events/message_create';
 
 require('dotenv').config({
     path: path.join(__dirname, ".env")
 })
 
+export const ROLE_ID = process.env._TC_ROLE_ID
 
 export const sequelize = new Sequelize({
     dialect: 'sqlite',
@@ -36,7 +39,7 @@ sequelize.sync({alter: true}).then(async sequelize => {
 
 
 const F = IntentsBitField.Flags;
-const client = new Client({
+export const client = new Client({
     intents: [F.Guilds, F.GuildMessages, F.GuildMembers, F.MessageContent]
 })
 
@@ -44,6 +47,9 @@ const client = new Client({
 client.once('ready', async (client) => {
     console.log("ready");
     commands_listener(client);
+    message_create(client);
+    topChatterScanner();
+
 })
 
 
