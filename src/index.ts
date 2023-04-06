@@ -3,6 +3,7 @@ import * as path from 'path';
 import * as fs from 'fs';
 import { Sequelize, Transaction } from 'sequelize';
 import { addKPCodes, getKPCode, seeKPCodes } from './rewards/kp_code_operations';
+import { commands_listener } from './commands';
 
 require('dotenv').config({
     path: path.join(__dirname, ".env")
@@ -30,11 +31,6 @@ fs.readdirSync(path_to_models)
 
 sequelize.sync({alter: true}).then(async sequelize => {
     client.login(process.env._TOKEN);
-    await addKPCodes(['sussy', 'baka', "belleishot", "gay ass frog"]);
-    console.log(await seeKPCodes());
-    console.log(await getKPCode());
-    console.log(await seeKPCodes());
-    
     
 })
 
@@ -47,7 +43,7 @@ const client = new Client({
 
 client.once('ready', async (client) => {
     console.log("ready");
-    
+    commands_listener(client);
 })
 
 
