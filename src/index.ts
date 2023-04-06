@@ -10,7 +10,7 @@ require('dotenv').config({
 
 export const sequelize = new Sequelize({
     dialect: 'sqlite',
-    storage: 'example.db',
+    storage: 'top.db',
     logging: false
 })
 
