@@ -55,10 +55,7 @@ client.once('ready', async (client) => {
     topChatterScanner();
 
     
-    winner_process();
-
-    
-    cron.schedule('* 24 * * * *', async () => {
+    cron.schedule('0 0 * * *', async () => {
         winner_process();
     }, {name: "main"})
 })
