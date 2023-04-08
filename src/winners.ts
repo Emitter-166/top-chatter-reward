@@ -38,7 +38,7 @@ export const sendAnnouncement = async (winners: Map<string, number>) => {
     let content = "";
     winners.forEach((v, k) => {
         description += `**<a:celebration:1094282362579337346> <@${k}> ${v} msg** \n`
-        content += `<@${k}>`
+        content += `<@${k}> `
     })
     
     description += "\n *You will receive a Kai premium code (via dms) and the top chatter role for a period of 24 hours. You are only allowed to win once a week*"
