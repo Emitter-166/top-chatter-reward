@@ -2,8 +2,6 @@ import { Op } from "sequelize";
 import { ROLE_ID, client, sequelize } from "..";
 
 export const giveTopChatterRole = async (userId: string): Promise<boolean> => {
-    const t = await sequelize.transaction({autocommit: false});
-
     try{
         if(!client.isReady()) return false;
         const guild = await client.guilds.fetch("859736561830592522")
@@ -26,25 +24,18 @@ export const giveTopChatterRole = async (userId: string): Promise<boolean> => {
                 lastWinAt: Date.now(),
                 hasRole: true
             },
-            transaction: t
         })
 
         if(!created){
             await user_model.update({
                 lastWinAt: Date.now(),
                 hasRole: true
-            }, {transaction: t})
+            })
         }
-
-        await t.commit();
-        
-
 
         return true;
 
     }catch(err){
-        await t.rollback()
-
         console.log(err);
         return false; 
     }

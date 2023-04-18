@@ -15,7 +15,6 @@ export const message_create = (client: Client) => {
         if(!msg.member) return;
         if(!msg.member.roles.cache.has("924834841890009188")) return;
         
-        const t = await sequelize.transaction({ autocommit: false });
     
         try {
             // Check if user has won in the past 7 days
@@ -31,7 +30,6 @@ export const message_create = (client: Client) => {
                     where: {
                         userId: msg.author.id
                     },
-                    transaction: t
                 });
     
                 await messages_model.increment('msg', {
@@ -39,17 +37,13 @@ export const message_create = (client: Client) => {
                         userId: msg.member.id
                     },
                     by: 1,
-                    transaction: t
                 });
             }
 
-            await t.commit();
 
         } catch (err) {
             console.log(err);
-            await t.rollback();
         }
-    
     });
      
 }
