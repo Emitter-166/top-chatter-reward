@@ -1,13 +1,12 @@
 import { Client, IntentsBitField} from 'discord.js';
 import * as path from 'path';
 import * as fs from 'fs';
-import { Sequelize, Transaction } from 'sequelize';
-import { addKPCodes, getKPCode, seeKPCodes, sendKPCode } from './rewards/kp_code_operations';
+import { Sequelize} from 'sequelize';
 import { commands_listener } from './commands';
-import { giveTopChatterRole, removeTopChatterRole, topChatterScanner } from './rewards/top_chatter_operations';
+import { topChatterScanner } from './rewards/top_chatter_operations';
 import { message_create } from './events/message_create';
 import cron from 'node-cron'
-import { pickWinners, sendAnnouncement, winner_process } from './winners';
+import {winner_process} from './winners';
 
 
 require('dotenv').config({
