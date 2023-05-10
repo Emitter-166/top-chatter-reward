@@ -54,8 +54,11 @@ export const topChatterScanner = () => {
             }
         })
 
-        users.forEach(user => {
+        users.forEach(async user => {
             removeTopChatterRole(user.get("userId") as string)
+            await user.update({
+                hasRole: false
+            })
         })
         
     }, 60_000)

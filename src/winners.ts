@@ -2,7 +2,7 @@ import { ChannelType, ColorResolvable, GuildTextBasedChannel } from "discord.js"
 import { ANNOUNCEMENT_CHANNEL_ID, client, sequelize } from ".";
 import { EmbedBuilder } from "@discordjs/builders";
 import { giveTopChatterRole } from "./rewards/top_chatter_operations";
-import { sendKPCode } from "./rewards/kp_code_operations";
+// import { sendKPCode } from "./rewards/kp_code_operations";
 
 export const pickWinners = async (): Promise<Map<string, number>> => {
     const messages_model = sequelize.model("messages");
@@ -41,7 +41,7 @@ export const sendAnnouncement = async (winners: Map<string, number>) => {
         content += `<@${k}> `
     })
     
-    description += "\n *You will receive a Kai premium code (via dms) and the top chatter role for a period of 24 hours. You are only allowed to win once a week*"
+    description += "\n *You will receive the top chatter role for a period of 24 hours!! You are only allowed to win once a week*"
     embed.setDescription(description);
 
     channel.send({
@@ -56,7 +56,7 @@ export const winner_process = async () => {
     for(let winner of winners){
         const userId = winner[0];
         await giveTopChatterRole(userId);
-        sendKPCode(userId);
+        // sendKPCode(userId);
     }
     await sendAnnouncement(winners);
 
